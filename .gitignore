@@ -71,3 +71,17 @@ funclist
 nbproject/Makefile-*
 disassembly/
 *.mapkms.conf
+
+PlantWaterer.X/nbproject/private/
+
+PlantWaterer.X/nbproject/Makefile-impl.mk
+
+PlantWaterer.X/nbproject/Makefile-default.mk
+
+PlantWaterer.X/nbproject/Makefile-genesis.properties
+
+PlantWaterer.X/nbproject/Makefile-local-default.mk
+
+PlantWaterer.X/nbproject/Makefile-variables.mk
+
+PlantWaterer.X/nbproject/Package-default.bash
