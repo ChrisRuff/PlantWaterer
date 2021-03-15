@@ -85,3 +85,5 @@ PlantWaterer.X/nbproject/Makefile-local-default.mk
 PlantWaterer.X/nbproject/Makefile-variables.mk
 
 PlantWaterer.X/nbproject/Package-default.bash
+
+PlantWaterer.X/.generated_files/
