@@ -31,14 +31,35 @@
 #ifndef BINARY_CONVERTER_H
 #define	BINARY_CONVERTER_H
 
+#define TIMER_PERIOD 1/FCY
 #include <xc.h> 
+
+typedef struct seg_bits 
+{
+    unsigned int A : 7; // Leftmost seven seg
+    unsigned int B : 7;
+    unsigned int C : 7;
+    unsigned int D : 7; // Rightmost seven seg
+}SegBits;
+
+
+/**
+ * Convert a single 0-9 digit to seven segment format
+ * @param in digit to be converted
+ * @return 0b0000000 - 0b1111111
+ */
+int toDigit(char in);
 
 /**
  * Converts value given from the timer to seven segment value
  * @param binary value from the timer 0x00000000 -> 0xFFFFFFFF
- * @return binary value from 
+ * @return binary value for all the 7segs 
+ * INT(31-24)(ABCDEFG)1 
+ * INT(23-16)(ABCDEFG)2
+ * INT(15-8) (ABCDEFG)3
+ * INT(7-0)  (ABCDEFG)4
  */
-int toSevenSegment(int binary, int maxVal);
+SegBits toSevenSegment(int binary, int maxVal);
 
 /**
  * 
