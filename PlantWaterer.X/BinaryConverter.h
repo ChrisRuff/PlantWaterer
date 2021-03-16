@@ -38,18 +38,18 @@
 #include <libpic30.h>
 
 // Define wire placements
-#define SEGD1  LATB;
-#define SEGD2  LATB;
-#define SEGD3  LATB;
-#define SEGD4  LATB;
-#define SEGA   LATB;
-#define SEGB   LATB;
-#define SEGC   LATB;
-#define SEGD   LATB;
-#define SEGE   LATB;
-#define SEGF   LATB;
-#define SEGG   LATB;
-#define SEGDEC LATB;
+#define SEGD1  LATCbits.LATC0
+#define SEGD2  LATCbits.LATC0
+#define SEGD3  LATCbits.LATC0
+#define SEGD4  LATCbits.LATC0
+#define SEGA   LATCbits.LATC0
+#define SEGB   LATCbits.LATC0
+#define SEGC   LATCbits.LATC0
+#define SEGD   LATCbits.LATC0
+#define SEGE   LATCbits.LATC0
+#define SEGF   LATCbits.LATC0
+#define SEGG   LATCbits.LATC0
+#define SEGDEC LATCbits.LATC0
 
 typedef struct seg_bits 
 {
