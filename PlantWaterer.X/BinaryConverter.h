@@ -51,6 +51,18 @@
 #define SEGG   LATCbits.LATC0
 #define SEGDEC LATCbits.LATC0
 
+#define LCD0 LATCbits.LATC0
+#define LCD1 LATCbits.LATC0
+#define LCD2 LATCbits.LATC0
+#define LCD3 LATCbits.LATC0
+#define LCD4 LATCbits.LATC0
+#define LCD5 LATCbits.LATC0
+#define LCD6 LATCbits.LATC0
+#define LCD7 LATCbits.LATC0
+#define LCD8 LATCbits.LATC0
+#define LCDRS LATCbits.LATC0
+#define LCDEN LATCbits.LATC0
+ 
 typedef struct seg_bits 
 {
     unsigned int A : 7; // Leftmost seven seg
