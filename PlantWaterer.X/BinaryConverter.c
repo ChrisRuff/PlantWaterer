@@ -5,7 +5,7 @@
  * Created on March 13, 2021, 10:07 PM
  */
 
-#include <BinaryConverter.h>
+#include "BinaryConverter.h"
 
 int toDigit(char in)
 {
@@ -46,7 +46,7 @@ int toDigit(char in)
     }
 }
 
-SegBits toSevenSegment(int binary);
+SegBits toSevenSegment(int binary)
 {
     // Convert binary value to time in seconds based on clock speed
     int time = TIMER_PERIOD * binary;
@@ -62,7 +62,45 @@ SegBits toSevenSegment(int binary);
     outBits.D = toDigit(D);
     return outBits;
 }
-int toLCD(int binary)
+LcdBits toLCD(int binary)
 {
-    return 0;
+    LcdBits b;
+    return b;
+}
+
+
+void toDisplay(int binary)
+{
+    SegBits segs = toSevenSegment(binary);
+    int i;
+    LATBbits.LATB0=0;
+    LATBbits.LATB1=0;
+    LATBbits.LATB2=0;
+    LATBbits.LATB3=0;
+    for(i = 0; i < 4; ++i)
+    {
+        switch(i) 
+        {
+            case 0: 
+                LATBbits.LATB0=1; 
+                LATBbits.LATB3=0; 
+                // DATABITS = segs.A;
+                break;
+            case 1: 
+                LATBbits.LATB1=1; 
+                LATBbits.LATB0=0; 
+                // DATABITS = segs.B;
+                break;
+            case 2: 
+                LATBbits.LATB2=1; 
+                LATBbits.LATB1=0; break;
+                // DATABITS = segs.C;
+            case 3: 
+                LATBbits.LATB3=1; 
+                LATBbits.LATB2=0; break;
+                // DATABITS = segs.D;
+        }
+        
+        __delay_ms(5);
+    }
 }

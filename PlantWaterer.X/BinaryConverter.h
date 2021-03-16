@@ -31,8 +31,25 @@
 #ifndef BINARY_CONVERTER_H
 #define	BINARY_CONVERTER_H
 
+#define FOSC 32000000UL
+#define FCY FOSC/2
 #define TIMER_PERIOD 1/FCY
 #include <xc.h> 
+#include <libpic30.h>
+
+// Define wire placements
+#define SEGD1  LATB;
+#define SEGD2  LATB;
+#define SEGD3  LATB;
+#define SEGD4  LATB;
+#define SEGA   LATB;
+#define SEGB   LATB;
+#define SEGC   LATB;
+#define SEGD   LATB;
+#define SEGE   LATB;
+#define SEGF   LATB;
+#define SEGG   LATB;
+#define SEGDEC LATB;
 
 typedef struct seg_bits 
 {
@@ -41,7 +58,12 @@ typedef struct seg_bits
     unsigned int C : 7;
     unsigned int D : 7; // Rightmost seven seg
 }SegBits;
-
+typedef struct lcd_bits
+{
+    unsigned int RS : 1;
+    unsigned int EN : 1;
+    unsigned int DATA : 8;
+}LcdBits;
 
 /**
  * Convert a single 0-9 digit to seven segment format
@@ -59,14 +81,20 @@ int toDigit(char in);
  * INT(15-8) (ABCDEFG)3
  * INT(7-0)  (ABCDEFG)4
  */
-SegBits toSevenSegment(int binary, int maxVal);
+SegBits toSevenSegment(int binary);
 
 /**
  * 
  * @param binary
  * @return 
  */
-int toLCD(int binary);
+LcdBits toLCD(int binary);
+
+/**
+ * Send timer value to display
+ * @param timer binary val
+ */
+void toDisplay(int binary);
 
 #ifdef	__cplusplus
 extern "C" {
