@@ -36,32 +36,6 @@
 #define TIMER_PERIOD 1/FCY
 #include <xc.h> 
 #include <libpic30.h>
-
-// Define wire placements
-#define SEGD1  LATCbits.LATC0
-#define SEGD2  LATCbits.LATC0
-#define SEGD3  LATCbits.LATC0
-#define SEGD4  LATCbits.LATC0
-#define SEGA   LATCbits.LATC0
-#define SEGB   LATCbits.LATC0
-#define SEGC   LATCbits.LATC0
-#define SEGD   LATCbits.LATC0
-#define SEGE   LATCbits.LATC0
-#define SEGF   LATCbits.LATC0
-#define SEGG   LATCbits.LATC0
-#define SEGDEC LATCbits.LATC0
-
-#define LCD0 LATCbits.LATC0
-#define LCD1 LATCbits.LATC0
-#define LCD2 LATCbits.LATC0
-#define LCD3 LATCbits.LATC0
-#define LCD4 LATCbits.LATC0
-#define LCD5 LATCbits.LATC0
-#define LCD6 LATCbits.LATC0
-#define LCD7 LATCbits.LATC0
-#define LCD8 LATCbits.LATC0
-#define LCDRS LATCbits.LATC0
-#define LCDEN LATCbits.LATC0
  
 typedef struct seg_bits 
 {
