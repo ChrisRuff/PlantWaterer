@@ -12,7 +12,7 @@ int getCount() { return countTime; }
 
 void ProcessTimer(int time)
 {
-    countTime = time*60;
+    countTime = time;
     done = 0;
     InterInit();
 }
@@ -38,7 +38,7 @@ void __attribute__((interrupt(auto_psv))) _T1Interrupt(void){
         return;
     }
     countTime --;
-    PR1 = 0xF424;
+    PR1 = FCY/256;
     IFS0bits.T1IF = 0;
 }
 

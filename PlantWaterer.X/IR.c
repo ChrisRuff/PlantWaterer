@@ -11,6 +11,7 @@ int getCommand()
 {
     return command;
 }
+void resetCommand() { command = 0; }
 void setupIR()
 {
     // RST_2 is input

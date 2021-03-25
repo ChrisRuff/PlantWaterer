@@ -37,8 +37,10 @@
 #include "Globals.h"
 #include <stdio.h>
 static int command;
+static int waitTime;
 
 int getCommand();
+void resetCommand();
 void setupIR();
 void parseIR();
 void __attribute__((interrupt, no_auto_psv)) _CNBInterrupt( void );

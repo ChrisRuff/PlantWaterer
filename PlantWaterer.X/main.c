@@ -95,25 +95,69 @@
 int main(void) 
 {
     setupIR();
-    wait();
+    
+    initSegPins();
+    while(1)
+    {
+        wait(220);
+        watering();
+    }
+    
 }
 
-void wait()
+void wait(int duration)
 {
-    initSegPins();
-    ProcessTimer(61);
+    ProcessTimer(duration);
     int c;
+    int flag = 0;
     do
     {
-        if(command != 0)
+        // Check for manual override
+        if(0)//getButtonPressed())
         {
-            
+            if(!flag) 
+            {
+                //openValve();
+            }
+            c = getCount();
+            flag = 1;
+            continue;
+        }
+        else if(flag)
+        {
+            flag = 0;
+            ProcessTimer(c);
+            //closeValve();
+        }
+        
+        if(getCommand() != 0)
+        {
+            resetCommand();
+            toDisplay(-1);
         }
         else
         {
             int c = getCount();
+            // int duration = getDuration();
             toDisplay(c);
         }
-        
-    }while(c != 0);
+    }while(c > 0);
+}
+void waterWait(int duration)
+{
+    ProcessTimer(duration);
+    int c;
+    do
+    {
+        // Check for manual override
+        toDisplay(-2);
+    }while(c > 0);
+}
+void watering()
+{
+    // openValve();
+    // playAlarm();
+    // waterWait(getDuration());
+    // closeValve();
+
 }
