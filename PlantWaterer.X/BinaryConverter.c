@@ -78,12 +78,12 @@ SegBits toSevenSegment(int time)
     // Convert binary value to time in seconds based on clock speed
     char mins = time / 60;
     char secs = time % 60;
-    char D = mins / 10 % 10;
-    char C = mins % 10;
+    char A = mins / 10 % 10;
+    char B = mins % 10;
     //char D = time / 1000 % 10;
     //char C = time / 100 % 10;
-    char B = secs / 10 % 10;
-    char A = secs % 10;
+    char C = secs / 10 % 10;
+    char D = secs % 10;
     
     SegBits outBits;
     outBits.A = toDigit(A);

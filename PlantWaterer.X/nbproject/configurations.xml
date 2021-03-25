@@ -10,6 +10,7 @@
       <itemPath>Timer.h</itemPath>
       <itemPath>Globals.h</itemPath>
       <itemPath>IR.h</itemPath>
+      <itemPath>Motor.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -23,6 +24,7 @@
       <itemPath>OutputEnable.c</itemPath>
       <itemPath>Timer.c</itemPath>
       <itemPath>IR.c</itemPath>
+      <itemPath>Motor.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

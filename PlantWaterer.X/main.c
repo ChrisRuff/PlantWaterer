@@ -91,12 +91,20 @@
 #include "BinaryConverter.h"
 #include "Timer.h"
 #include "IR.h"
+#include "Motor.h"
 
 int main(void) 
 {
     setupIR();
-    
     initSegPins();
+    initMotor();
+    while(0)
+    {
+        openValve();
+        __delay_ms(1000);
+        closeValve();
+    }
+    
     while(1)
     {
         wait(220);
@@ -155,9 +163,9 @@ void waterWait(int duration)
 }
 void watering()
 {
-    // openValve();
+    openValve();
     // playAlarm();
     // waterWait(getDuration());
-    // closeValve();
+    closeValve();
 
 }
