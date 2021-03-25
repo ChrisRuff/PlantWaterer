@@ -87,17 +87,19 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF.
 
-#include <xc.h>
 
-
-
-#define FOSC 32000000UL
-#define FCY FOSC/2
-
-#include "xc.h"
 #include "BinaryConverter.h"
+#include "Timer.h"
 
 int main(void) 
 {
-
+    initSegPins();
+    ProcessTimer(60.5);
+    int c;
+    do
+    {
+        int c = getCount();
+        toDisplay(c);
+    }while(c != 0);
+    main();
 }

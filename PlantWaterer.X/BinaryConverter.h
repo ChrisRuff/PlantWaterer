@@ -31,25 +31,10 @@
 #ifndef BINARY_CONVERTER_H
 #define	BINARY_CONVERTER_H
 
-#define FOSC 32000000UL
-#define FCY FOSC/2
-#define TIMER_PERIOD 1/FCY
-#include <xc.h> 
-#include <libpic30.h>
- 
-typedef struct seg_bits 
-{
-    unsigned int A : 7; // Leftmost seven seg
-    unsigned int B : 7;
-    unsigned int C : 7;
-    unsigned int D : 7; // Rightmost seven seg
-}SegBits;
-typedef struct lcd_bits
-{
-    unsigned int RS : 1;
-    unsigned int EN : 1;
-    unsigned int DATA : 8;
-}LcdBits;
+#include "Globals.h"
+#include "SevenSeg.h"
+
+void initSegPins();
 
 /**
  * Convert a single 0-9 digit to seven segment format

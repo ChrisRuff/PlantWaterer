@@ -15,7 +15,7 @@
  * @param LcdBits struct containing data
  * @param en boolean turning output on/off
  */
-void LCD_out(LcdBits data, bool en)
+void LCD_out(LcdBits data, int en)
 {
     if (en==true)
     {
@@ -64,7 +64,7 @@ void LCD_out(LcdBits data, bool en)
  * @param seg_bits struct containing data
  * @param en boolean turning output on/off
  */
-void sevenSegOut (seg_bits data, bool en)
+void sevenSegOut (SegBits data, int en)
 {
     if (en==true)
     {
