@@ -90,16 +90,30 @@
 
 #include "BinaryConverter.h"
 #include "Timer.h"
+#include "IR.h"
 
 int main(void) 
 {
+    setupIR();
+    wait();
+}
+
+void wait()
+{
     initSegPins();
-    ProcessTimer(60.5);
+    ProcessTimer(61);
     int c;
     do
     {
-        int c = getCount();
-        toDisplay(c);
+        if(command != 0)
+        {
+            
+        }
+        else
+        {
+            int c = getCount();
+            toDisplay(c);
+        }
+        
     }while(c != 0);
-    main();
 }
