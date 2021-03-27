@@ -91,16 +91,21 @@
 #include "BinaryConverter.h"
 #include "Timer.h"
 #include "IR.h"
+#include "ADC.h"
+volatile unsigned short output;
 
 int main(void) 
 {
     setupIR();
-    
+    setupADC();
     initSegPins();
+    ADCON3Lbits.SWCTRG = 1;
+    while (ADSTATLbits.AN1RDY == 0);
     while(1)
     {
-        wait(220);
-        watering();
+        output = ADCBUF1;
+//        wait(220);
+//        watering();
     }
     
 }
@@ -161,3 +166,10 @@ void watering()
     // closeValve();
 
 }
+
+// ADC AN0 ISR
+void __attribute__((interrupt, no_auto_psv)) _ADCAN1Interrupt(void)
+{
+    output = ADCBUF1; // read conversion result
+    _ADCAN1IF = 0; // clear interrupt flag
+}                                                          

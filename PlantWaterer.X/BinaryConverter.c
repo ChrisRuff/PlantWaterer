@@ -28,7 +28,7 @@ void initSegPins()
     TRISCbits.TRISC7 = 0;
     TRISBbits.TRISB13 = 0;
     TRISBbits.TRISB14 = 0;
-    TRISBbits.TRISB2 = 0;
+    //TRISBbits.TRISB2 = 0;
     TRISBbits.TRISB8 = 0;
     TRISBbits.TRISB9 = 0;
     TRISBbits.TRISB15 = 0;

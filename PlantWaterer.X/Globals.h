@@ -12,7 +12,7 @@
 #define LCD4 LATCbits.LATC6   // SCK on MikroBus B
 #define LCD5 LATCbits.LATC2   // MISO on MikroBus B
 #define LCD6 LATCbits.LATC1    // MOSI on MikroBus B
-#define LCD7 LATDbits.LATD10    // AN on MikroBus B
+#define LCD7 LATBbits.LATB12    // TX on MikroBus A
 #define LCDRS LATCbits.LATC3   // CS on MikroBus B
 #define LCDEN LATDbits.LATD11  // RST on MikroBus B
  
@@ -45,5 +45,8 @@ typedef struct seg_bits
     unsigned int C : 7;
     unsigned int D : 7; // Rightmost seven seg
 }SegBits;
+
+// Define ADC output as potentiometer/POT
+#define POT ADCBUF0
 #endif	/* GLOBALS */
 
