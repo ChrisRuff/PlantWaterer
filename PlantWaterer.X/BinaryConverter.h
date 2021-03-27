@@ -67,6 +67,10 @@ LcdBits toLCD(int binary);
  */
 void toDisplay(int binary);
 
+void irDisplay(int* commands, int n);
+
+void upload(SegBits segs);
+
 #ifdef	__cplusplus
 extern "C" {
 #endif /* __cplusplus */

@@ -68,6 +68,12 @@ int toDigit(char in)
         case 9:
             return 0b1111011 ^ 127;
             break;
+        case 10: // '-'
+            return 0b0000001 ^ 127;
+        case 11: // 'P'
+        case 12: // 'O'
+        case 13: // 'U'
+        case 14: // 'R'
         default:
             return 0b1111111 ^ 127;
     }
@@ -75,15 +81,34 @@ int toDigit(char in)
 
 SegBits toSevenSegment(int time)
 {
-    // Convert binary value to time in seconds based on clock speed
-    char mins = time / 60;
-    char secs = time % 60;
-    char A = mins / 10 % 10;
-    char B = mins % 10;
-    //char D = time / 1000 % 10;
-    //char C = time / 100 % 10;
-    char C = secs / 10 % 10;
-    char D = secs % 10;
+    char A,B,C,D;
+    if(time == -1) // "----"
+    {
+        A = 10;
+        B = 10;
+        C = 10; 
+        D = 10;
+    }
+    else if(time == -2) // "POUR"
+    {
+        A = 11;
+        B = 12;
+        C = 13; 
+        D = 14;  
+    }
+    else
+    {
+        // Convert binary value to time in seconds based on clock speed
+        char mins = time / 60;
+        char secs = time % 60;
+        A = mins / 10 % 10;
+        B = mins % 10;
+        //char D = time / 1000 % 10;
+        //char C = time / 100 % 10;
+        C = secs / 10 % 10;
+        D = secs % 10;
+    }
+    
     
     SegBits outBits;
     outBits.A = toDigit(A);
@@ -102,6 +127,20 @@ LcdBits toLCD(int binary)
 void toDisplay(int binary)
 {
     SegBits segs = toSevenSegment(binary);
+    int i;
+    upload(segs);
+}
+void irDisplay(int* commands, int n)
+{
+    SegBits segs;
+    segs.D = toDigit(n > 0 ? commands[0] : 10);
+    segs.C = toDigit(n > 1 ? commands[1] : 10);
+    segs.B = toDigit(n > 2 ? commands[2] : 10);
+    segs.A = toDigit(n > 3 ? commands[3] : 10);
+    upload(segs);
+}
+void upload(SegBits segs)
+{
     int i;
     for(i = 0; i < 4; ++i)
     {
@@ -163,4 +202,8 @@ void toDisplay(int binary)
         }
         __delay_ms(5);
     }
+    SEGD1=0;
+    SEGD2=0; 
+    SEGD3=0; 
+    SEGD4=0; 
 }

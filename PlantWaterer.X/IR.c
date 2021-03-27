@@ -4,57 +4,106 @@
  *
  * Created on March 24, 2021, 11:45 PM
  */
-
 #include "IR.h"
 
-int getCommand()
-{
-    return command;
+int getCommand() 
+{ 
+    switch(command)
+    {
+        case 0:
+            return 0;
+        case 0x000F:
+            return 1;
+        case 0x0F8C: 
+            return 2;
+        case 0x0FBD: 
+            return 3;
+        case 0x0F88: 
+            return 4;
+        case 0x0F9C: 
+            return 5;
+        case 0x0FAD: 
+            return 6;
+        case 0x0FA1: 
+            return 7;
+        case 0x0FA5: 
+            return 8;
+        case 0x0FA9: 
+            return 9;
+        default: 
+            return command;
+    }
 }
 void resetCommand() { command = 0; }
 void setupIR()
 {
-    // RST_2 is input
+    // CS_2 is input
     TRISCbits.TRISC3 = 1;
-   
-    // Set Change notification interrupt enable and edge select for PORTD
-    CNCONDbits.ON = 1;
-    CNCONDbits.CNSTYLE = 0;
-    CNEN0Cbits.CNEN0C3 = 1;
-    CNEN1Cbits.CNEN1C3 = 0;
+    ANSELCbits.ANSELC3 = 0;
     
-    // Setup Change notification interrupts
-    IEC1bits.CNCIE = 1;
-    IFS1bits.CNCIF = 0;
-    IPC4bits.CNCIP = 7;
+    // Set PORTC3 to be IC1
+    RPINR3bits.ICM1R = 51;
+    
+    CCP1CON1Lbits.T32 = 1;
+    CCP1CON1Lbits.CCPMOD = 1;
+    CCP1CON1Lbits.CCPON = 1;
+    CCP1CON1Lbits.CCSEL = 1;
+    CCP1CON2Hbits.ICS = 0;
+    CCP1CON2Hbits.AUXOUT = 3;
+    
+    // Setup input capture interrupts
+    IEC0bits.CCP1IE = 1;
+    IFS0bits.CCP1IF = 0;
+    IPC1bits.CCP1IP = 7;
     command = 0;
 }
 void parseIR()
-{
-    int time = TMR1;
+{   
+    int c = 0;
+    while((IR_IN == 0) && (c < 180))
+    {
+        c++;
+        __delay_us(50);
+    }
+    if( (c > 179) || (c < 120))
+        return;
+    
+    c = 0;
+    while(IR_IN && (c < 90))
+    {
+        c++;
+        __delay_us(50);
+    }
+    if((c > 89) || (c < 40))
+        return;
+    
     int n;
-    int bits[12];
     for(n = 0; n < 12; ++n)
     {
-        while(PORTDbits.RD11);
-        TMR1 = 0;
-        while(PORTDbits.RD11 && TMR1 < 10000);
-        bits[n] = TMR1;
+        c = 0;
+        while(!IR_IN && c <= 23)
+        {
+            c++;
+            __delay_us(50);
+        }
+        if(c > 23) return;
+        
+        c = 0;
+        while(IR_IN && c <= 45)
+        {
+            c++;
+            __delay_us(50);
+        }
+        if(c > 45) return;
+        if(c > 21)
+            command |= 1ul << (11-n);
+        else
+            command &= ~(1ul << (11-n));
     }
-    TMR1 = time;
-    command = 1;
-    if(bits[6] > 3000) command += 64;
-    if(bits[5] > 3000) command += 32;
-    if(bits[4] > 3000) command += 16;
-    if(bits[3] > 3000) command += 8;
-    if(bits[2] > 3000) command += 4;
-    if(bits[1] > 3000) command += 2;
-    if(bits[0] > 3000) command += 1;
-    printf("Command: %d", command);
+    printf("Command: %d\n", command);
 }
-void __attribute__((interrupt, no_auto_psv)) _CNDInterrupt( void )
+void __attribute__((interrupt, auto_psv)) _CCP1Interrupt(void)
 {
     parseIR();
-    IFS4bits.CNDIF = 0;
+    IFS0bits.CCP1IF = 0;
 }
-

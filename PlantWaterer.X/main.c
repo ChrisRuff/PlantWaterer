@@ -93,6 +93,10 @@
 #include "IR.h"
 #include "Motor.h"
 
+void getCommands();
+
+static int waitTime = 50;
+
 int main(void) 
 {
     setupIR();
@@ -101,13 +105,13 @@ int main(void)
     while(0)
     {
         openValve();
-        __delay_ms(1000);
+        __delay_ms(4000);
         closeValve();
     }
     
     while(1)
     {
-        wait(220);
+        wait(waitTime);
         watering();
     }
     
@@ -140,12 +144,11 @@ void wait(int duration)
         
         if(getCommand() != 0)
         {
-            resetCommand();
-            toDisplay(-1);
+            getCommands();
         }
         else
         {
-            int c = getCount();
+            c = getCount();
             // int duration = getDuration();
             toDisplay(c);
         }
@@ -168,4 +171,21 @@ void watering()
     // waterWait(getDuration());
     closeValve();
 
+}
+
+void getCommands()
+{
+    int commands[4];
+    int i;
+    for(i = 0; i < 4; i++)
+    {
+        while(getCommand() == 0)
+        {
+            irDisplay(commands, i);
+        }
+        commands[i] = getCommand();
+        resetCommand();
+    }
+    irDisplay(commands,4);
+    __delay_ms(500);
 }

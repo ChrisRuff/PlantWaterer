@@ -3,7 +3,7 @@
 
 #define FOSC 32000000UL
 #define FCY FOSC/2
-#define TIMER_PERIOD 1/FCY
+#define TCY 1/FCY
 #include <xc.h> 
 #include <libpic30.h>
 
@@ -46,5 +46,7 @@ typedef struct seg_bits
     unsigned int C : 7;
     unsigned int D : 7; // Rightmost seven seg
 }SegBits;
+
+#define IR_IN PORTCbits.RC3
 #endif	/* GLOBALS */
 
