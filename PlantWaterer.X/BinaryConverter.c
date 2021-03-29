@@ -40,40 +40,34 @@ int toDigit(char in)
     {
         case 0:
             return 0b1111110 ^ 127;
-            break;
         case 1:
             return 0b0110000 ^ 127;
-            break;
         case 2:
             return 0b1101101 ^ 127;
-            break;
         case 3:
             return 0b1111001 ^ 127;
-            break;
         case 4:
             return 0b0110011 ^ 127;
-            break;
         case 5:
             return 0b1011011 ^ 127;
-            break;
         case 6:
             return 0b1011111 ^ 127;
-            break;
         case 7:
             return 0b1110000 ^ 127;
-            break;
         case 8:
             return 0b1111111 ^ 127;
-            break;
         case 9:
             return 0b1111011 ^ 127;
-            break;
         case 10: // '-'
             return 0b0000001 ^ 127;
         case 11: // 'P'
+            return 0b1100111 ^ 127;
         case 12: // 'O'
+            return 0b1111110 ^ 127;
         case 13: // 'U'
+            return 0b0111110 ^ 127;
         case 14: // 'R'
+            return 0b1100110 ^ 127;
         default:
             return 0b1111111 ^ 127;
     }
@@ -133,10 +127,42 @@ void toDisplay(int binary)
 void irDisplay(int* commands, int n)
 {
     SegBits segs;
-    segs.D = toDigit(n > 0 ? commands[0] : 10);
-    segs.C = toDigit(n > 1 ? commands[1] : 10);
-    segs.B = toDigit(n > 2 ? commands[2] : 10);
-    segs.A = toDigit(n > 3 ? commands[3] : 10);
+    switch(n)
+    {
+        case 1:
+            segs.D = toDigit(commands[0]);
+            segs.C = toDigit(10);
+            segs.B = toDigit(10);
+            segs.A = toDigit(10);
+            break;
+        case 2:
+            segs.D = toDigit(commands[1]);
+            segs.C = toDigit(commands[0]);
+            segs.B = toDigit(10);
+            segs.A = toDigit(10);
+            break;
+        case 3:
+            segs.D = toDigit(commands[2]);
+            segs.C = toDigit(commands[1]);
+            segs.B = toDigit(commands[0]);
+            segs.A = toDigit(10);
+            break;
+        default:
+            segs.D = toDigit(commands[3]);
+            segs.C = toDigit(commands[2]);
+            segs.B = toDigit(commands[1]);
+            segs.A = toDigit(commands[0]);
+            break;
+    }
+    upload(segs);
+}
+void pourDisplay()
+{
+    SegBits segs;
+    segs.A = toDigit(11);
+    segs.B = toDigit(12);
+    segs.C = toDigit(13);
+    segs.D = toDigit(14);
     upload(segs);
 }
 void upload(SegBits segs)

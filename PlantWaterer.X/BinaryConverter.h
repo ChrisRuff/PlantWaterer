@@ -69,6 +69,8 @@ void toDisplay(int binary);
 
 void irDisplay(int* commands, int n);
 
+void pourDisplay();
+
 void upload(SegBits segs);
 
 #ifdef	__cplusplus

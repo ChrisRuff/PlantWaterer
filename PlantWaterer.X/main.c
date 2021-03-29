@@ -94,6 +94,8 @@
 #include "Motor.h"
 
 void getCommands();
+void waterWait(int duration);
+void wait(int duration);
 
 static int waitTime = 50;
 
@@ -102,17 +104,11 @@ int main(void)
     setupIR();
     initSegPins();
     initMotor();
-    while(0)
-    {
-        openValve();
-        __delay_ms(4000);
-        closeValve();
-    }
     
     while(1)
     {
         wait(waitTime);
-        watering();
+        waterWait(5);
     }
     
 }
@@ -142,7 +138,7 @@ void wait(int duration)
             //closeValve();
         }
         
-        if(getCommand() != 0)
+        if(getCommand() != -1)
         {
             getCommands();
         }
@@ -156,21 +152,17 @@ void wait(int duration)
 }
 void waterWait(int duration)
 {
+    openValve();
     ProcessTimer(duration);
     int c;
     do
     {
         // Check for manual override
-        toDisplay(-2);
+        
+        c = getCount();
+        pourDisplay();
     }while(c > 0);
-}
-void watering()
-{
-    openValve();
-    // playAlarm();
-    // waterWait(getDuration());
     closeValve();
-
 }
 
 void getCommands()
@@ -179,7 +171,7 @@ void getCommands()
     int i;
     for(i = 0; i < 4; i++)
     {
-        while(getCommand() == 0)
+        while(getCommand() == -1)
         {
             irDisplay(commands, i);
         }
@@ -188,4 +180,6 @@ void getCommands()
     }
     irDisplay(commands,4);
     __delay_ms(500);
+    waitTime = (commands[0]*10 + commands[1])*60 + (commands[2]*10 + commands[3]);
+    ProcessTimer(waitTime);
 }
