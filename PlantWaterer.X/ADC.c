@@ -14,8 +14,8 @@ void setupADC()
     TRISBbits.TRISB2 = 1;   // Set CS_1 as input
     ADCON3Hbits.CLKSEL = 1;  // Set ADC clock to FOSC
     ADCON3Hbits.CLKDIV = 0;  // No clock division (1:1)
-    ADCORE1Hbits.ADCS = 0; // ADC core 0 clock = FOSC/2
-    ADCORE1Hbits.RES = 0;
+    //ADCORE1Hbits.ADCS = 0; // ADC core 0 clock = FOSC/2
+    //ADCORE1Hbits.RES = 0;
     ADCON3Lbits.REFSEL = 0;
     ADCON1Hbits.FORM = 0;    // Set output format to integer
     ADMOD0Lbits.SIGN1 = 0;
@@ -33,6 +33,6 @@ void setupADC()
     _ADCAN1IF = 0; // Clear interrupt flag for AN1
     _ADCAN1IE = 1; // Enable interrupt for AN1
     //ADCON3Lbits.CNVCHSEL = 0;
-    ADTRIG0Lbits.TRGSRC1 = 1;
+    //ADTRIG0Lbits.TRGSRC1 = 1;
 }
 
