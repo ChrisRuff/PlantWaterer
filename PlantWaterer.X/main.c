@@ -92,6 +92,7 @@
 #include "Timer.h"
 #include "IR.h"
 #include "Motor.h"
+#include "ADC.h"
 
 void getCommands();
 void waterWait(int duration);
