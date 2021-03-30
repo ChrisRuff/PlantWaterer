@@ -46,7 +46,9 @@ typedef struct seg_bits
     unsigned int D : 7; // Rightmost seven seg
 }SegBits;
 
-// Define ADC output as potentiometer/POT
-#define POT ADCBUF0
+// Define ADC wires
+#define ADC_in TRISDbits.TRISD10
+#define ADC_an ANSELDbits.ANSELD10
+
 #endif	/* GLOBALS */
 

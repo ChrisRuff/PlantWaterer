@@ -20,8 +20,8 @@
  */
 
 /* 
- * File:   
- * Author: 
+ * File:  ADC.h
+ * Author: Reid Hurlburt
  * Comments:
  * Revision history: 
  */
@@ -35,6 +35,10 @@
 #include <stdio.h>
 
 void setupADC();
+
+void triggerADC();
+
+unsigned short readADC();
 
 #endif	/* ADC_H */
 

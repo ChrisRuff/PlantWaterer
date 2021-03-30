@@ -88,90 +88,14 @@
 // Use project enums instead of #define for ON and OFF.
 
 
-//#include "BinaryConverter.h"
-//#include "Timer.h"
-//#include "IR.h"
-//#include "ADC.h"
+#include "ADC.h"
 #include <xc.h>
 volatile unsigned short output;
-volatile unsigned short adc_test;
 
 int main(void) 
 {
-    //setupIR();
-    //setupADC();
-    TRISBbits.TRISB15 = 1;   // Set CS_1 as input
-    //initSegPins();
-    //ADCON3Lbits.SWCTRG = 1;
-    //ADCON3Lbits.CNVRTCH = 1;
-    //while (ADSTATLbits.AN1RDY == 0);
-    while(1)
-    {
-        if (PORTBbits.RB15==1)
-        {
-            adc_test = 1;
-        }
-        output = ADCBUF1;
-//        wait(220);
-//        watering();
-    }
-    
-}
-
-//void wait(int duration)
-//{
-//    ProcessTimer(duration);
-//    int c;
-//    int flag = 0;
-//    do
-//    {
-//        // Check for manual override
-//        if(0)//getButtonPressed())
-//        {
-//            if(!flag) 
-//            {
-//                //openValve();
-//            }
-//            c = getCount();
-//            flag = 1;
-//            continue;
-//        }
-//        else if(flag)
-//        {
-//            flag = 0;
-//            ProcessTimer(c);
-//            //closeValve();
-//        }
-//        
-//        if(getCommand() != 0)
-//        {
-//            resetCommand();
-//            toDisplay(-1);
-//        }
-//        else
-//        {
-//            int c = getCount();
-//            // int duration = getDuration();
-//            toDisplay(c);
-//        }
-//    }while(c > 0);
-//}
-//void waterWait(int duration)
-//{
-//    ProcessTimer(duration);
-//    int c;
-//    do
-//    {
-//        // Check for manual override
-//        toDisplay(-2);
-//    }while(c > 0);
-//}
-//void watering()
-//{
-//    // openValve();
-//    // playAlarm();
-//    // waterWait(getDuration());
-//    // closeValve();
-//
-//}
-                                           
+    setupADC();
+    triggerADC();
+    output = readADC();
+    while(1);
+}                                 
