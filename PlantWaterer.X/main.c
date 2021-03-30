@@ -169,11 +169,20 @@ void getCommands()
 {
     int commands[4];
     int i;
+    int curTime = getCount();
+    ProcessTimer(5);
     for(i = 0; i < 4; i++)
     {
+        int c;
         while(getCommand() == -1)
         {
             irDisplay(commands, i);
+            c = getCount();
+            if(c <= 0)
+            {
+                ProcessTimer(curTime - 5);
+                return;
+            }
         }
         commands[i] = getCommand();
         resetCommand();

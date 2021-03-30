@@ -34,8 +34,8 @@
 #include "Globals.h"
 #include "SevenSeg.h"
 
-void initSegPins();
-
+void initSeg();
+void initLCD();
 /**
  * Convert a single 0-9 digit to seven segment format
  * @param in digit to be converted
