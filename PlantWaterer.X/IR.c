@@ -1,6 +1,6 @@
 /*
  * File:   IR.c
- * Author: root
+ * Author: Chris
  *
  * Created on March 24, 2021, 11:45 PM
  */
@@ -36,7 +36,7 @@ int getCommand()
     }
 }
 void resetCommand() { command = -1; }
-void setupIR()
+void initIR()
 {
     // CS_2 is input
     TRISCbits.TRISC3 = 1;
@@ -90,7 +90,6 @@ void parseIR()
         }
         
     }
-    printf("Command: %d\n", command);
 }
 void __attribute__((interrupt, auto_psv)) _CCP1Interrupt(void)
 {

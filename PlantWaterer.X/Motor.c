@@ -1,6 +1,6 @@
 /*
  * File:   Motor.c
- * Author: root
+ * Author: Chris
  *
  * Created on March 25, 2021, 3:08 PM
  */

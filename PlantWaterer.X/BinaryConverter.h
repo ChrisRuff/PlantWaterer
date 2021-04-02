@@ -21,7 +21,7 @@
 
 /* 
  * File:   
- * Author: 
+ * Author: Chris
  * Comments:
  * Revision history: 
  */
@@ -32,10 +32,9 @@
 #define	BINARY_CONVERTER_H
 
 #include "Globals.h"
-#include "SevenSeg.h"
 
 void initSeg();
-void initLCD();
+void initLED();
 /**
  * Convert a single 0-9 digit to seven segment format
  * @param in digit to be converted
@@ -59,30 +58,30 @@ SegBits toSevenSegment(int binary);
  * @param binary
  * @return 
  */
-LcdBits toLCD(int binary);
 
 /**
  * Send timer value to display
  * @param timer binary val
  */
-void toDisplay(int binary);
+void toDisplay(int time, int duration);
 
 void irDisplay(int* commands, int n);
 
 void pourDisplay();
 
-void upload(SegBits segs);
+void segUpload(SegBits segs);
+void ledUpload(int duration);
 
-#ifdef	__cplusplus
-extern "C" {
-#endif /* __cplusplus */
 
-    // TODO If C++ is being used, regular C code needs function names to have C 
-    // linkage so the functions can be used by the c code. 
 
-#ifdef	__cplusplus
-}
-#endif /* __cplusplus */
+void toLCD(int time, int duration, LcdBits* lcds);
+void lcdUpload(LcdBits* segs);
+void lcdClear();
+void lcdWriteData(char data);
+void lcdSetCursor(char a, char b);
+void lcdExecCmd(char cmd);
+void lcdWrite(char data);
+
 
 #endif	/* BINARY_CONVERTER_H */
 

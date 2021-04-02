@@ -9,17 +9,15 @@
 
 // Define wire placements
 
-#define LCD4 LATCbits.LATC6   // SCK on MikroBus B
-#define LCD5 LATCbits.LATC2   // MISO on MikroBus B
-#define LCD6 LATCbits.LATC1    // MOSI on MikroBus B
-#define LCD7 LATBbits.LATB12    // TX on MikroBus A
-#define LCDRS LATCbits.LATC3   // CS on MikroBus B
-#define LCDEN LATDbits.LATD11  // RST on MikroBus B
+#define LED1 LATCbits.LATC13  // PWM on MikroBus A
+#define LED2 LATBbits.LATB12  // TX on MikroBus A
+#define LED3 LATDbits.LATD3    // SCL on MikroBus A
+#define LED4 LATDbits.LATD4   // SDA on MikroBus A  
+#define LED5 LATCbits.LATC6   // SCK on MikroBus B
+#define LED6 LATDbits.LATD11  // RST on MikroBus B
  
 typedef struct lcd_bits
 {
-    unsigned int RS : 1;
-    unsigned int EN : 1;
     unsigned int DATA : 8;
 }LcdBits;
 
@@ -48,9 +46,9 @@ typedef struct seg_bits
 }SegBits;
 
 // Define ADC wires
-#define ADC_in TRISDbits.TRISD10
+#define ADC_in TRISDbits.TRISD10  // AN on MikroBus B
 #define ADC_an ANSELDbits.ANSELD10
 
-#define IR_IN PORTCbits.RC3
+#define IR_IN PORTCbits.RC3 // CS on MikroBus B
 #endif	/* GLOBALS */
 

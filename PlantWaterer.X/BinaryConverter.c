@@ -1,12 +1,12 @@
 /*
  * File:   BinaryConverter.c
- * Author: root
+ * Author: Chris
  *
  * Created on March 13, 2021, 10:07 PM
  */
 
 #include "BinaryConverter.h"
-
+#define DELAY 200
 void initSeg()
 {
     TRISCbits.TRISC0 = 0;
@@ -16,14 +16,32 @@ void initSeg()
     TRISCbits.TRISC7 = 0;
     TRISBbits.TRISB13 = 0;
     TRISBbits.TRISB14 = 0;
-    //TRISBbits.TRISB2 = 0;
+    TRISBbits.TRISB2 = 0;
     TRISBbits.TRISB8 = 0;
     TRISBbits.TRISB9 = 0;
     TRISBbits.TRISB15 = 0;
     TRISBbits.TRISB7 = 0;
 }
-void initLCD()
+
+void initLED()
 {
+    TRISCbits.TRISC6 = 0; // Set pins as output
+    TRISCbits.TRISC13 = 0;
+    TRISCbits.TRISC15 = 0;
+    TRISBbits.TRISB12 = 0;
+    TRISDbits.TRISD3 = 0;
+    TRISDbits.TRISD4 = 0;
+    TRISDbits.TRISD11 = 0;
+    
+    ANSELCbits.ANSELC6 = 0;
+    ANSELDbits.ANSELD11 = 0;
+    
+    LED1 = 0;
+    LED2 = 0;
+    LED3 = 0;
+    LED4 = 0;
+    LED5 = 0;
+    LED6 = 0;
 }
 int toDigit(char in)
 {
@@ -64,7 +82,6 @@ int toDigit(char in)
     }
 }
 
-
 SegBits toSevenSegment(int time)
 {
     char A,B,C,D;
@@ -103,18 +120,15 @@ SegBits toSevenSegment(int time)
     outBits.D = toDigit(D);
     return outBits;
 }
-LcdBits toLCD(int binary)
-{
-    LcdBits b;
-    return b;
-}
 
 
-void toDisplay(int binary)
+
+void toDisplay(int time, int duration)
 {
-    SegBits segs = toSevenSegment(binary);
-    int i;
-    upload(segs);
+    SegBits segs = toSevenSegment(time);
+    
+    segUpload(segs);
+    ledUpload(duration);
 }
 void irDisplay(int* commands, int n)
 {
@@ -146,23 +160,25 @@ void irDisplay(int* commands, int n)
             segs.A = toDigit(commands[0]);
             break;
     }
-    upload(segs);
+    segUpload(segs);
 }
-void pourDisplay()
+void pourDisplay(int remaining)
 {
     SegBits segs;
     segs.A = toDigit(11);
     segs.B = toDigit(12);
     segs.C = toDigit(13);
     segs.D = toDigit(14);
-    upload(segs);
+    segUpload(segs);
+    ledUpload(remaining);
 }
-void upload(SegBits segs)
+
+
+void segUpload(SegBits segs)
 {
     int i;
     for(i = 0; i < 4; ++i)
     {
-        
         switch(i) 
         {
             case 0: 
@@ -223,5 +239,123 @@ void upload(SegBits segs)
     SEGD1=0;
     SEGD2=0; 
     SEGD3=0; 
-    SEGD4=0; 
+    SEGD4=0;
+    
+
 }
+void ledUpload(int duration)
+{
+    LED1 = 0;
+    LED2 = 0;
+    LED3 = 0;
+    LED4 = 0;
+    LED5 = 0;
+    LED6 = 0;
+    switch(duration/10)
+    {
+        case 6:
+            LED6 = 1;
+        case 5:
+            LED5 = 1;
+        case 4:
+            LED4 = 1;
+        case 3:
+            LED3 = 1;
+        case 2:
+            LED2 = 1;
+        case 1:
+            LED1 = 1;
+        default:
+            break;
+    }
+}
+
+/*
+void toLCD(int time, int duration, LcdBits* lcds)
+{
+    // Convert binary value to time in seconds based on clock speed
+    char mins = time / 60;
+    char secs = time % 60;
+    
+    lcds[0].DATA = 'T';
+    lcds[1].DATA = ':';
+    lcds[2].DATA = ' ';
+    lcds[3].DATA = mins / 60 % 10 + '0';
+    lcds[4].DATA = mins % 10 + '0';
+    lcds[5].DATA = secs / 60 % 10 + '0';
+    lcds[6].DATA = secs % 10 + '0';
+    lcds[7].DATA = ' ';
+    lcds[8].DATA = 'D';
+    lcds[9].DATA = 'u';
+    lcds[10].DATA = 'r';
+    lcds[11].DATA = ':';
+    lcds[12].DATA = ' ';
+    lcds[13].DATA = duration / 10 + '0';
+    lcds[14].DATA = duration % 10 + '0';
+    lcds[15].DATA = ' ';
+    
+    return lcds;
+}
+void lcdUpload(LcdBits* lcds)
+{
+    int i;
+    for(i = 0; i < 16; ++i)
+    {
+        if(i == 15)
+            lcdExecCmd(0xc0); // new line
+        lcdWriteData(lcds[i].DATA);
+        
+    }
+}
+void lcdExecCmd(char cmd)
+{
+    LCDRS = 0;
+    lcdWrite(cmd);
+    
+    if(cmd == 0x01 || cmd == 0x02) 
+        __delay_ms(1000);
+}
+void lcdWriteData(char data)
+{
+    LCDRS = 1;
+    lcdWrite(data);
+}
+void lcdWrite(char data)
+{
+    LCD4 = (data >> 4) & 0x1; // Send higher nibble
+    LCD5 = (data >> 5) & 0x1;
+    LCD6 = (data >> 6) & 0x1;
+    LCD7 = (data >> 7) & 0x1;
+    
+    LCDEN = 1; // Send high to low pulse
+    __delay_us(DELAY);
+    LCDEN = 0;
+    __delay_us(DELAY);
+    
+    LCD4 = data & 0x1;        // Send lower nibble
+    LCD5 = (data >> 1) & 0x1;
+    LCD6 = (data >> 2) & 0x1;
+    LCD7 = (data >> 3) & 0x1;
+    
+    LCDEN = 1; // Send high to low pulse
+    __delay_us(DELAY);
+    LCDEN = 0;
+    __delay_us(DELAY);
+}
+void lcdClear()
+{
+    lcdExecCmd(0); // Wipe the screen
+    lcdExecCmd(1); // Move to position 1
+}
+void lcdSetCursor(char a, char b)
+{
+    if(a == 1)
+    {
+        lcdExecCmd(0x80 + b - 1);
+    }
+    else
+    {
+        lcdExecCmd(0xC0 + b - 1);
+    }
+}
+*/

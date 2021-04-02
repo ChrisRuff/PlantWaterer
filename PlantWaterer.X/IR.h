@@ -21,7 +21,7 @@
 
 /* 
  * File:   
- * Author: 
+ * Author:  Chris
  * Comments:
  * Revision history: 
  */
@@ -31,17 +31,16 @@
 #ifndef IR_H
 #define	IR_H
 
+#include "Globals.h"
+
 #include "BinaryConverter.h"
 
-
-#include "Globals.h"
-#include <stdio.h>
 static int command;
 static int waitTime;
 
 int getCommand();
 void resetCommand();
-void setupIR();
+void initIR();
 
 // This method was adapted from 
 // https://github.com/chayanforyou/NEC-IR-Receiver-PIC/blob/master/NEC%20IR%20Receiver%20PIC16F877A/NEC%20IR%20Receiver%20PIC16F877A.c

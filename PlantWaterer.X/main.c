@@ -102,14 +102,17 @@ static int waitTime = 50;
 
 int main(void) 
 {
-    setupIR();
-    initSegPins();
+    initIR();
+    initSeg();
+    initLED();
+    setupADC();
     initMotor();
-    
+
     while(1)
     {
         wait(waitTime);
-        waterWait(5);
+        int duration = readADC();
+        waterWait(duration);
     }
     
 }
@@ -146,8 +149,7 @@ void wait(int duration)
         else
         {
             c = getCount();
-            // int duration = getDuration();
-            toDisplay(c);
+            toDisplay(c, readADC());
         }
     }while(c > 0);
 }
@@ -159,9 +161,15 @@ void waterWait(int duration)
     do
     {
         // Check for manual override
-        
-        c = getCount();
-        pourDisplay();
+        if(getCommand() != -1)
+        {
+            getCommands();
+        }
+        else
+        {
+            c = getCount();
+            pourDisplay(c);
+        }
     }while(c > 0);
     closeValve();
 }

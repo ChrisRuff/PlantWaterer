@@ -37,6 +37,7 @@ void triggerADC()
 
 unsigned short readADC()
 {
+    triggerADC();
     while(ADSTATHbits.AN18RDY!=1);
-    return ADCBUF18;
+    return ADCBUF18 / 67.2;
 }

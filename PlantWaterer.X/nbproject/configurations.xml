@@ -5,7 +5,6 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>BinaryConverter.h</itemPath>
-      <itemPath>LCD.h</itemPath>
       <itemPath>SevenSeg.h</itemPath>
       <itemPath>Timer.h</itemPath>
       <itemPath>Globals.h</itemPath>
