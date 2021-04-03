@@ -45,7 +45,7 @@ void initIR();
 // This method was adapted from 
 // https://github.com/chayanforyou/NEC-IR-Receiver-PIC/blob/master/NEC%20IR%20Receiver%20PIC16F877A/NEC%20IR%20Receiver%20PIC16F877A.c
 void parseIR();
-void __attribute__((interrupt, no_auto_psv)) _CNCInterrupt( void );
+void __attribute__((interrupt, no_auto_psv)) _CCP1Interrupt( void );
 
 
 #endif	/* IR_H */

@@ -13,19 +13,25 @@ void initMotor()
     TRISCbits.TRISC5 = 0; // Set PWM pins to outputs
     TRISCbits.TRISC4 = 0; 
     
-    MPER = 20000; // 200 kHz period
-    MPHASE = 50000;
-    MDC = MPER / 2;
+    MPER = 10000;
+    MPHASE = 0;
+    MDC = MPER / 4; // 25% Duty cycle
     
     PG5CONHbits.MDCSEL = 1;  // Use MPER, MPHASE, and MDC
     PG5CONHbits.MPERSEL = 1;
     PG5CONHbits.MPHSEL = 1;
+    PG5CONHbits.TRGMOD = 0;
     
     PCLKCONbits.MCLKSEL = 0; // Use FOSC
     PG5CONLbits.HREN = 1;
+    PG5CONLbits.MODSEL = 0; // Use independant edge mode
     
+    PG5IOCONHbits.PMOD = 1;
+    PG5IOCONHbits.PENH = 1;
+    PG5IOCONHbits.PENL = 1;
     
-    PG5CONLbits.MODSEL = 1; // Independant edge
+    PG5IOCONLbits.OVRENH = 0;
+    PG5IOCONLbits.OVRENL = 0;
 }
 void openValve()
 {
