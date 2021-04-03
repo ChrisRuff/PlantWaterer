@@ -50,5 +50,6 @@ typedef struct seg_bits
 #define ADC_an ANSELDbits.ANSELD10
 
 #define IR_IN PORTCbits.RC3 // CS on MikroBus B
+#define OVERRIDE PORTCbits.RC1 //MOSI on MikroBus B
 #endif	/* GLOBALS */
 
