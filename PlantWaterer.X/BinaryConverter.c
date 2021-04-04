@@ -253,6 +253,7 @@ void ledUpload(int duration)
     LED6 = 0;
     switch(duration/10)
     {
+        default:
         case 6:
             LED6 = 1;
         case 5:
@@ -265,7 +266,7 @@ void ledUpload(int duration)
             LED2 = 1;
         case 1:
             LED1 = 1;
-        default:
+        case 0:
             break;
     }
 }

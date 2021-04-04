@@ -93,7 +93,7 @@
 #include "IR.h"
 #include "Motor.h"
 #include "ADC.h"
-#include "override.h"
+#include "Override.h"
 
 void getCommands();
 void waterWait(int duration);
@@ -115,11 +115,14 @@ int main(void)
         wait(waitTime);
         if (getOverride())
         {
-            waterWait(10000000000);
+            resetOverride();
+            waterWait(1000);
+            resetOverride();
             continue;
         }
         int duration = readADC();
         waterWait(duration);
+        resetOverride();
     }
     
 }
@@ -134,9 +137,7 @@ void wait(int duration)
         // Check for manual override
         if(getOverride())//getButtonPressed())
         {
-            resetOverride();
             return;
-            
         }
         
         if(getCommand() != -1)
@@ -158,11 +159,10 @@ void waterWait(int duration)
     do
     {
         // Check for manual override
-         if(getOverride())//getButtonPressed())
+        if(getOverride())
         {
-            resetOverride();
+            closeValve();
             return;
-            
         }
         if(getCommand() != -1)
         {

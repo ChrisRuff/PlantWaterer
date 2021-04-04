@@ -11,7 +11,7 @@
       <itemPath>IR.h</itemPath>
       <itemPath>ADC.h</itemPath>
       <itemPath>Motor.h</itemPath>
-      <itemPath>override.h</itemPath>
+      <itemPath>Override.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -27,7 +27,7 @@
       <itemPath>IR.c</itemPath>
       <itemPath>Motor.c</itemPath>
       <itemPath>ADC.c</itemPath>
-      <itemPath>override.c</itemPath>
+      <itemPath>Override.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

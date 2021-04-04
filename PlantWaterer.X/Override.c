@@ -2,7 +2,7 @@
 //Jack Shaw
 //April 3rd 2021
 
-#include "override.h"
+#include "Override.h"
 
 
 int getOverride()
@@ -11,10 +11,10 @@ int getOverride()
 }
 void resetOverride()
 {
- override = 0;   
+    override = 0;   
 }
 void initOverride(void){
-      // CS_2 is input
+      // MOSI_2 is input
     TRISCbits.TRISC1 = 1;
     ANSELCbits.ANSELC1 = 0;
     
@@ -35,8 +35,8 @@ void initOverride(void){
     override=0;
 }
 
-void __attribute__((interrupt(auto_psv))) _CCP2Interrupt(void){
-    override=1;
+void __attribute__((interrupt, auto_psv)) _CCP2Interrupt(void){
+    override = 1;
     IFS1bits.CCP2IF=0;
 }
 
