@@ -20,68 +20,21 @@
  */
 
 /* 
- * File:   
- * Author: Chris
+ * File:   Alarm.h
+ * Author:  Chris Ruff
  * Comments:
  * Revision history: 
  */
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef BINARY_CONVERTER_H
-#define	BINARY_CONVERTER_H
-
+#ifndef ALARM_H
+#define	ALARM_H
 #include "Globals.h"
 
-void initSeg();
-void initLED();
-/**
- * Convert a single 0-9 digit to seven segment format
- * @param in digit to be converted
- * @return 0b0000000 - 0b1111111
- */
-int toDigit(char in);
+void initSpeaker();
+void soundOpenAlarm();
+void soundCloseAlarm();
 
-/**
- * Converts value given from the timer to seven segment value
- * @param binary value from the timer 0x00000000 -> 0xFFFFFFFF
- * @return binary value for all the 7segs 
- * INT(31-24)(ABCDEFG)1 
- * INT(23-16)(ABCDEFG)2
- * INT(15-8) (ABCDEFG)3
- * INT(7-0)  (ABCDEFG)4
- */
-SegBits toSevenSegment(int binary);
-
-/**
- * 
- * @param binary
- * @return 
- */
-
-/**
- * Send timer value to display
- * @param timer binary val
- */
-void toDisplay(int time, int duration);
-
-void irDisplay(int* commands, int n);
-
-void pourDisplay();
-
-void segUpload(SegBits segs);
-void ledUpload(int duration);
-
-
-
-void toLCD(int time, int duration, LcdBits* lcds);
-void lcdUpload(LcdBits* segs);
-void lcdClear();
-void lcdWriteData(char data);
-void lcdSetCursor(char a, char b);
-void lcdExecCmd(char cmd);
-void lcdWrite(char data);
-
-
-#endif	/* BINARY_CONVERTER_H */
+#endif	/* ALARM_H */
 
