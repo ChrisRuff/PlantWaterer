@@ -25,7 +25,7 @@
 // FSIGN
 
 // FOSCSEL
-#pragma config FNOSC = PRI              // Oscillator Source Selection (Primary Oscillator (XT, HS, EC))
+#pragma config FNOSC = FRCDIVN              // Oscillator Source Selection (Primary Oscillator (XT, HS, EC))
 #pragma config IESO = OFF               // Two-speed Oscillator Start-up Enable bit (Start up with user-selected oscillator source)
 
 // FOSC
@@ -94,12 +94,14 @@
 #include "Motor.h"
 #include "ADC.h"
 #include "Override.h"
+#include "Alarm.h"
+
 
 void getCommands();
 void waterWait(int duration);
 void wait(int duration);
 
-static int waitTime = 50;
+static int waitTime = 8;
 
 int main(void) 
 {
@@ -109,19 +111,34 @@ int main(void)
     setupADC();
     initMotor();
     initOverride();
-
+    initSpeaker();
+ 
+    while(0)
+    {
+        soundOpenAlarm();
+        __delay_ms(100);
+        soundCloseAlarm();
+        __delay_ms(100);
+    }
     while(1)
     {
         wait(waitTime);
-        if (getOverride())
+        
+        if (!OVERRIDE)
         {
             resetOverride();
+            while(!OVERRIDE);
             waterWait(1000);
+            while(!OVERRIDE);
             resetOverride();
             continue;
         }
-        int duration = readADC();
-        waterWait(duration);
+        else
+        {
+            int duration = readADC();
+            waterWait(duration);
+        }
+       
         resetOverride();
     }
     
@@ -135,7 +152,7 @@ void wait(int duration)
     do
     {
         // Check for manual override
-        if(getOverride())//getButtonPressed())
+        if(!OVERRIDE)//getButtonPressed())
         {
             return;
         }
@@ -159,7 +176,7 @@ void waterWait(int duration)
     do
     {
         // Check for manual override
-        if(getOverride())
+        if(!OVERRIDE)
         {
             closeValve();
             return;
@@ -182,9 +199,9 @@ void getCommands()
     int commands[4];
     int i;
     int curTime = getCount();
-    ProcessTimer(5);
     for(i = 0; i < 4; i++)
     {
+        ProcessTimer(5);
         int c;
         while(getCommand() == -1)
         {

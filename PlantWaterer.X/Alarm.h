@@ -20,22 +20,21 @@
  */
 
 /* 
- * File:   
- * Author:  Chris
+ * File:   Alarm.h
+ * Author:  Chris Ruff
  * Comments:
  * Revision history: 
  */
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef MOTOR_H
-#define	MOTOR_H
-
+#ifndef ALARM_H
+#define	ALARM_H
 #include "Globals.h"
-#include "Alarm.h"
-void openValve();
-void closeValve();
-void initMotor();
 
-#endif	/* MOTOR_H */
+void initSpeaker();
+void soundOpenAlarm();
+void soundCloseAlarm();
+
+#endif	/* ALARM_H */
 

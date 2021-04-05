@@ -15,12 +15,17 @@ void initSeg()
     TRISCbits.TRISC9 = 0;
     TRISCbits.TRISC7 = 0;
     TRISBbits.TRISB13 = 0;
-    TRISBbits.TRISB14 = 0;
+    TRISBbits.TRISB7 = 0;
     TRISBbits.TRISB2 = 0;
     TRISBbits.TRISB8 = 0;
     TRISBbits.TRISB9 = 0;
-    TRISBbits.TRISB15 = 0;
-    TRISBbits.TRISB7 = 0;
+    TRISCbits.TRISC14 = 0;
+    
+    ANSELBbits.ANSELB2 = 0; // Disable analog 
+    ANSELBbits.ANSELB7 = 0;
+    ANSELBbits.ANSELB8 = 0;
+    ANSELCbits.ANSELC0 = 0;
+    ANSELCbits.ANSELC7 = 0;
 }
 
 void initLED()
@@ -206,7 +211,6 @@ void segUpload(SegBits segs)
                 SEGE = (segs.B & ( 1 << 3-1 )) != 0;
                 SEGF = (segs.B & ( 1 << 2-1 )) != 0;
                 SEGG = (segs.B & ( 1 << 1-1 )) != 0;
-                SEGDEC = 1;
                 break;
             case 2: 
                 SEGD3=1;
