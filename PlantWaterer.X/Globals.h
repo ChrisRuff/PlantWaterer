@@ -1,7 +1,7 @@
 #ifndef GLOBALS
 #define	GLOBALS
 
-#define FOSC 32000000UL
+#define FOSC 4000000UL
 #define FCY FOSC/2
 #define TCY 1/FCY
 #include <xc.h> 
@@ -25,14 +25,13 @@ typedef struct lcd_bits
 // Define wire placements
 #define SEGD1  LATCbits.LATC0  // AN on MikroBus A
 #define SEGA   LATCbits.LATC12  // PWM on MikroBus B
-#define SEGF   LATBbits.LATB15  // INT on MikroBus B
+#define SEGF   LATCbits.LATC14  // INT on MikroBus A
 #define SEGD2  LATBbits.LATB13  // TX on MikroBus B
-#define SEGD3  LATBbits.LATB14  // RX on MikroBus B
+#define SEGD3  LATBbits.LATB7  // SCK on MikroBus A
 #define SEGB   LATCbits.LATC9  // SCL on MikroBus B
 
 #define SEGE   LATBbits.LATB9  // MOSI on MikroBus A
 #define SEGD   LATBbits.LATB8  // MISO on MikroBus A
-#define SEGDEC LATBbits.LATB7  // SCK on MikroBus A
 #define SEGC   LATBbits.LATB2  // CS on MikroBus A
 #define SEGG   LATCbits.LATC7  // RST on MikroBus A
 #define SEGD4  LATCbits.LATC8  // SDA on MikroBus B
@@ -51,5 +50,8 @@ typedef struct seg_bits
 
 #define IR_IN PORTCbits.RC3 // CS on MikroBus B
 #define OVERRIDE PORTCbits.RC1 //MOSI on MikroBus B
+#define MOTOR LATBbits.LATB14 // RX on MikroBus B
+
+#define SPEAKER LATDbits.LATD15 // SPEAK_ENABLE
 #endif	/* GLOBALS */
 

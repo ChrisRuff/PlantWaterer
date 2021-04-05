@@ -71,11 +71,13 @@ void parseIR()
     int n;
     for(n = 0; n < 32; ++n)
     {
+        // Check for low
         c = 0;
         while(!IR_IN && (c <= 23)){ c++; __delay_us(50); }
         if((c > 22) || (c < 4)) return;
         
-        c = 0;;
+        // Find duration of pulse 500us=0 and 1.3ms=1 high
+        c = 0;
         while(IR_IN && (c <= 45)){ c++; __delay_us(50); }
         if((c > 44) || (c < 8)) return;
         
@@ -88,7 +90,6 @@ void parseIR()
         {
             command &= ~(1ul << (31-n));
         }
-        
     }
 }
 void __attribute__((interrupt, auto_psv)) _CCP1Interrupt(void)
