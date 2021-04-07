@@ -21,14 +21,13 @@ void initSpeaker()
     // Enable APLL
     ACLKCON1bits.APLLEN = 1;
 
-    //DAC
+    //Setup the DAC
     DACCTRL1Lbits.CLKSEL = 2;
     DACCTRL1Lbits.DACON = 1;
     DAC1CONLbits.DACEN = 1;
     DAC1CONLbits.DACOEN = 1;
-    //Triangle Wave mode
-    DAC1DATLbits.DACLOW = 0xCD; // Lower data value
-    DAC1DATHbits.DACDAT = 0xB20; // Upper data value
+
+    //Use Triangle Waves for the DAC
     SLP1DATbits.SLPDAT = 0x2; // Slope rate, counts per step
     SLP1CONHbits.TWME = 1;
     SLP1CONHbits.SLOPEN = 1;

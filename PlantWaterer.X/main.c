@@ -198,7 +198,7 @@ void getCommands()
             c = getCount();
             if(c <= 0)
             {
-                ProcessTimer(curTime - 5);
+                ProcessTimer(curTime);
                 return;
             }
         }
@@ -208,5 +208,7 @@ void getCommands()
     irDisplay(commands,4);
     __delay_ms(500);
     waitTime = (commands[0]*10 + commands[1])*60 + (commands[2]*10 + commands[3]);
+		if(waitTime >= 6000) 
+			waitTime = 5999;
     ProcessTimer(waitTime);
 }
