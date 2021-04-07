@@ -28,17 +28,5 @@ void InterInit();
 //Interrupt to handle the timer
 void __attribute__((interrupt(auto_psv))) _T1Interrupt(void);
 
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
-
-
-
-#ifdef	__cplusplus
-}
-#endif
-
 #endif	/* TIMER_H */
 

@@ -101,7 +101,7 @@ void getCommands();
 void waterWait(int duration);
 void wait(int duration);
 
-static int waitTime = 8;
+static int waitTime = 60;
 
 int main(void) 
 {
@@ -113,13 +113,6 @@ int main(void)
     initOverride();
     initSpeaker();
  
-    while(0)
-    {
-        soundOpenAlarm();
-        __delay_ms(100);
-        soundCloseAlarm();
-        __delay_ms(100);
-    }
     while(1)
     {
         wait(waitTime);
@@ -130,16 +123,12 @@ int main(void)
             while(!OVERRIDE);
             waterWait(1000);
             while(!OVERRIDE);
-            resetOverride();
-            continue;
         }
         else
         {
             int duration = readADC();
             waterWait(duration);
         }
-       
-        resetOverride();
     }
     
 }
@@ -209,7 +198,7 @@ void getCommands()
             c = getCount();
             if(c <= 0)
             {
-                ProcessTimer(curTime - 5);
+                ProcessTimer(curTime);
                 return;
             }
         }
@@ -219,5 +208,7 @@ void getCommands()
     irDisplay(commands,4);
     __delay_ms(500);
     waitTime = (commands[0]*10 + commands[1])*60 + (commands[2]*10 + commands[3]);
+		if(waitTime >= 6000) 
+			waitTime = 5999;
     ProcessTimer(waitTime);
 }
